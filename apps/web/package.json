@@ -1,0 +1,17 @@
+{
+  "name": "@codifypros/web",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --host",
+    "build": "astro build",
+    "preview": "astro preview --host"
+  },
+  "dependencies": {
+    "astro": "^5.5.3"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.2"
+  }
+}

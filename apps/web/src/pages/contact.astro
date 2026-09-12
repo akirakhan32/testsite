@@ -1,0 +1,130 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+
+const apiUrl = import.meta.env.PUBLIC_API_URL || "http://localhost:8787";
+const serviceParam = Astro.url.searchParams.get("service") ?? "";
+---
+<BaseLayout
+  title="Contact"
+  description="Tell us what’s slow. Email contact@codifypros.io or call +44 7916 692920."
+>
+  <SiteHeader slot="header" />
+
+  <div class="wrap contact-grid" data-reveal>
+    <div>
+      <p class="eyebrow">Contact</p>
+      <h1>Tell us what’s slow.</h1>
+      <p class="lede">
+        Share the manual work eating hours. We’ll reply with whether we’re a fit — and a clear next step if we are.
+      </p>
+      <ul class="channels">
+        <li><a href="mailto:contact@codifypros.io">contact@codifypros.io</a></li>
+        <li><a href="tel:+447916692920">+44 7916 692920</a></li>
+      </ul>
+      <div class="locations">
+        <p>Pakistan (Haripur/Mang)</p>
+        <p>Austin TX</p>
+      </div>
+    </div>
+
+    <form class="form" id="contact-form" novalidate>
+      <input type="hidden" name="service" value={serviceParam} />
+      <div class="form-field">
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" autocomplete="name" required maxlength="120" />
+      </div>
+      <div class="form-field">
+        <label for="email">Work email</label>
+        <input id="email" name="email" type="email" autocomplete="email" required maxlength="200" />
+      </div>
+      <div class="form-field">
+        <label for="message">What you need</label>
+        <textarea id="message" name="message" required maxlength="5000" placeholder="Where hours burn, systems involved, timeline if any…"></textarea>
+      </div>
+      <div class="hp" aria-hidden="true">
+        <label for="website">Website</label>
+        <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+      </div>
+      <div class="form-field">
+        <label for="budget">Budget band <span class="hint">(optional)</span></label>
+        <select id="budget" name="budget">
+          <option value="">Select…</option>
+          <option value="under-10k">Under $10k</option>
+          <option value="10-25k">$10–25k</option>
+          <option value="25-50k">$25–50k</option>
+          <option value="50k-plus">$50k+</option>
+          <option value="not-sure">Not sure</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" type="submit" id="submit-btn">Send brief</button>
+      <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<script define:vars={{ apiUrl, serviceParam }}>
+  const form = document.getElementById("contact-form");
+  const status = document.getElementById("form-status");
+  const submitBtn = document.getElementById("submit-btn");
+
+  function showStatus(ok, text) {
+    if (!status) return;
+    status.textContent = text;
+    status.classList.add("is-visible");
+    status.classList.toggle("is-ok", ok);
+    status.classList.toggle("is-err", !ok);
+  }
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!form || !submitBtn) return;
+
+    const fd = new FormData(form);
+    const payload = {
+      name: String(fd.get("name") || "").trim(),
+      email: String(fd.get("email") || "").trim(),
+      company: String(fd.get("company") || "").trim() || undefined,
+      message: String(fd.get("message") || "").trim(),
+      budget: String(fd.get("budget") || "") || undefined,
+      website: String(fd.get("website") || ""),
+    };
+
+    if (serviceParam && payload.message && !payload.message.includes(serviceParam)) {
+      payload.message = `[service:${serviceParam}] ${payload.message}`;
+    }
+
+    submitBtn.disabled = true;
+    showStatus(true, "Sending…");
+
+    try {
+      const res = await fetch(`${apiUrl}/api/contact`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) {
+        const err = data.error || "Something went wrong. Email us directly.";
+        showStatus(false, err);
+        if (data.field) {
+          const el = form.querySelector(`[name="${data.field}"]`);
+          el?.focus();
+        }
+      } else {
+        showStatus(true, "Brief received. We’ll reply soon.");
+        form.reset();
+      }
+    } catch {
+      showStatus(
+        false,
+        "Could not reach the API. Email contact@codifypros.io instead."
+      );
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+</script>
