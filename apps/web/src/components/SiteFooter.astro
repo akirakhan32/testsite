@@ -1,38 +1,62 @@
 ---
+interface Props {
+  compact?: boolean;
+}
+const { compact = false } = Astro.props;
 const year = new Date().getFullYear();
 ---
-<footer class="site-footer">
+<footer class:list={["site-footer", { "site-footer--compact": compact }]}>
   <div class="wrap">
-    <div class="site-footer__grid">
-      <div>
-        <a class="logo" href="/">CodifyPros</a>
-        <p class="site-footer__oneliner">
-          CodifyPros replaces manual operations with intelligent systems — software, agents, and workflows that run the work.
-        </p>
-      </div>
-      <div>
-        <h4>Navigate</h4>
-        <ul>
+    {compact ? (
+      <>
+        <ul class="site-footer__compact-nav">
           <li><a href="/services">Services</a></li>
           <li><a href="/about">About</a></li>
           <li><a href="/contact">Contact</a></li>
         </ul>
-      </div>
-      <div>
-        <h4>Contact</h4>
-        <ul>
-          <li><a href="mailto:contact@codifypros.io">contact@codifypros.io</a></li>
-          <li><a href="tel:+447916692920">+44 7916 692920</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="site-footer__bottom">
-      <span>Pakistan (Haripur/Mang) · Austin TX</span>
-      <span class="site-footer__legal">
-        <a href="/privacy">Privacy</a>
-        <a href="/terms">Terms</a>
-        <span>© {year} CodifyPros</span>
-      </span>
-    </div>
+        <div class="site-footer__bottom">
+          <span>Pakistan (Haripur/Mang) · Austin TX</span>
+          <span class="site-footer__legal">
+            <a href="/privacy">Privacy</a>
+            <a href="/terms">Terms</a>
+            <span>© {year} CodifyPros</span>
+          </span>
+        </div>
+      </>
+    ) : (
+      <>
+        <div class="site-footer__grid">
+          <div>
+            <a class="logo" href="/">CodifyPros</a>
+            <p class="site-footer__oneliner">
+              CodifyPros replaces manual operations with intelligent systems — software, agents, and workflows that run the work.
+            </p>
+          </div>
+          <div>
+            <h4>Navigate</h4>
+            <ul>
+              <li><a href="/services">Services</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/contact">Contact</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Contact</h4>
+            <ul>
+              <li><a href="mailto:contact@codifypros.io">contact@codifypros.io</a></li>
+              <li><a href="tel:+447916692920">+44 7916 692920</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="site-footer__bottom">
+          <span>Pakistan (Haripur/Mang) · Austin TX</span>
+          <span class="site-footer__legal">
+            <a href="/privacy">Privacy</a>
+            <a href="/terms">Terms</a>
+            <span>© {year} CodifyPros</span>
+          </span>
+        </div>
+      </>
+    )}
   </div>
 </footer>
