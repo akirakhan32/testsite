@@ -9,9 +9,9 @@
   --copper-hover: #e07a48;
   --sage: #7c9a72;
 
-  --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
-  --font-sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-display: "Instrument Serif", "Instrument Serif Fallback", Georgia, "Times New Roman", serif;
+  --font-sans: "IBM Plex Sans", "IBM Plex Sans Fallback", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", "IBM Plex Mono Fallback", ui-monospace, monospace;
 
   --max: 1120px;
   --radius-control: 6px;
@@ -50,8 +50,9 @@ body {
   background: var(--ink);
   color: var(--paper);
   font-family: var(--font-sans);
-  font-size: 17px;
-  line-height: 1.55;
+  font-size: 18px;
+  line-height: 1.6;
+  letter-spacing: 0.005em;
   font-size-adjust: 0.5;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -131,10 +132,12 @@ h2,
 .h2 {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(28px, 4vw, 40px);
+  font-size: clamp(28px, 4vw, 44px);
   line-height: 1.1;
   letter-spacing: -0.02em;
   margin: 0 0 16px;
+  text-wrap: balance;
+  font-optical-sizing: auto;
 }
 
 h3,
@@ -570,6 +573,11 @@ h3,
 }
 @media (min-width: 768px) {
   .method-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (min-width: 1120px) {
+  .method-grid {
     grid-template-columns: repeat(4, 1fr);
   }
 }
@@ -579,9 +587,29 @@ h3,
 }
 @media (min-width: 768px) {
   .process-step {
+    padding: 32px 24px 24px 0;
+    border-bottom: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+  }
+  .process-step:nth-child(2n) {
+    border-right: none;
+    padding-right: 0;
+    padding-left: 24px;
+  }
+  .process-step:nth-child(2n + 1) {
+    padding-left: 0;
+  }
+}
+@media (min-width: 1120px) {
+  .process-step {
     padding: 32px 24px 32px 0;
     border-bottom: none;
     border-right: 1px solid var(--line);
+  }
+  .process-step:nth-child(2n) {
+    border-right: 1px solid var(--line);
+    padding-left: 0;
+    padding-right: 24px;
   }
   .process-step:last-child {
     border-right: none;
@@ -916,6 +944,8 @@ main {
   flex: 1;
 }
 .page-shell {
+  position: relative;
+  z-index: 1;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -980,3 +1010,26 @@ textarea::placeholder {
   color: var(--copper);
 }
 .legal .lede { max-width: 62ch; }
+
+.site-footer--compact {
+  padding: 32px 0 24px;
+}
+.site-footer--compact .site-footer__grid {
+  display: none;
+}
+.site-footer--compact .site-footer__bottom {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+.site-footer__compact-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+}
+.site-footer__compact-nav a {
+  font-size: 14px;
+}
