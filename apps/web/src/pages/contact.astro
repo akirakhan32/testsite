@@ -63,7 +63,7 @@ const serviceParam = Astro.url.searchParams.get("service") ?? "";
     </form>
   </div>
 
-  <SiteFooter slot="footer" />
+  <SiteFooter slot="footer" compact />
 </BaseLayout>
 
 <script define:vars={{ apiUrl, serviceParam }}>

@@ -24,7 +24,7 @@ const pageTitle = title.includes("CodifyPros") ? title : `${title} · CodifyPros
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -47,6 +47,27 @@ const pageTitle = title.includes("CodifyPros") ? title : `${title} · CodifyPros
       </main>
       <slot name="footer" />
     </div>
+    <div class="sticky-cta" data-sticky-cta hidden>
+      <div class="wrap sticky-cta__inner">
+        <span class="sticky-cta__copy">Stuck in manual ops?</span>
+        <a class="btn btn-primary" href="/contact">Talk to us</a>
+      </div>
+    </div>
+    <script>
+      const bar = document.querySelector("[data-sticky-cta]");
+      const hero = document.querySelector(".hero, .page-hero, h1");
+      if (bar && hero) {
+        const io = new IntersectionObserver(
+          ([e]) => {
+            const show = !e.isIntersecting;
+            bar.hidden = !show;
+            bar.classList.toggle("is-on", show);
+          },
+          { threshold: 0.02 }
+        );
+        io.observe(hero);
+      }
+    </script>
     <script>
       const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       document.querySelectorAll("[data-reveal-stagger]").forEach((parent) => {
