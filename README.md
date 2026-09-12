@@ -67,3 +67,10 @@ See `.env.example` and `apps/api/HARDEN.md`.
 ## License
 
 Proprietary — CodifyPros.
+
+
+## Deploy
+
+**Web (Vercel):** import `akirakhan32/testsite`, use repo root (`vercel.json`).
+
+**API:** deploy `apps/api` to Railway/Fly/Render. Set `CORS_ORIGIN` to the web origin, set web `PUBLIC_API_URL` to the API URL, optionally `EMAIL_PROVIDER=resend` + `RESEND_API_KEY`.
