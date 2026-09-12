@@ -20,7 +20,7 @@ import { services, fitIf, notFitIf } from "../data/services";
       </p>
       <nav class="jump-links" aria-label="Jump to service">
         {services.map((s) => (
-          <a class="chip" href={`#${s.slug}`}>{s.name}</a>
+          <a class="chip" href={`#${s.slug}`}>{s.tag}</a>
         ))}
       </nav>
     </div>

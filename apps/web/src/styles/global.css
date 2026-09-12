@@ -329,6 +329,17 @@ h3,
 .nav-toggle span::after {
   top: 6px;
 }
+.nav-toggle--close span {
+  background: transparent;
+}
+.nav-toggle--close span::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+.nav-toggle--close span::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
 
 .mobile-nav {
   display: none;
