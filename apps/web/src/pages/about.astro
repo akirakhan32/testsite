@@ -1,0 +1,101 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import CTABand from "../components/CTABand.astro";
+import { beliefs, whoWeHelp, methodSteps } from "../data/services";
+---
+<BaseLayout
+  title="About"
+  description="A small team that ships systems. Pakistan HQ, Austin TX reach. CodifyPros replaces manual operations with intelligent systems."
+>
+  <SiteHeader slot="header" />
+
+  <section class="page-hero">
+    <div class="wrap" data-reveal>
+      <p class="eyebrow">About</p>
+      <h1>A small team that ships systems.</h1>
+      <p class="lede">
+        CodifyPros replaces manual operations with intelligent systems — software, agents, and workflows that run the work. We’re based in Pakistan (Haripur/Mang) with US reach from Austin TX. Honest scale. No theater.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="beliefs-heading">
+    <div class="wrap">
+      <header class="section-header" data-reveal>
+        <p class="eyebrow">Beliefs</p>
+        <h2 id="beliefs-heading">How we choose the work.</h2>
+      </header>
+      <div class="beliefs" data-reveal-stagger>
+        {beliefs.map((b) => (
+          <article class="belief" data-reveal>
+            <div class="belief__n">{b.n}</div>
+            <h3>{b.title}</h3>
+            <p class="muted">{b.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="who-heading">
+    <div class="wrap">
+      <header class="section-header" data-reveal>
+        <p class="eyebrow">Who we help</p>
+        <h2 id="who-heading">Operators who feel the tax.</h2>
+      </header>
+      <div class="who-rows" data-reveal-stagger>
+        {whoWeHelp.map((w) => (
+          <div class="who-row" data-reveal>
+            <strong>{w.title}</strong>
+            <span>{w.body}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="method" aria-labelledby="about-method-heading">
+    <div class="wrap">
+      <header class="section-header" data-reveal>
+        <p class="eyebrow">Method</p>
+        <h2 id="about-method-heading">Audit → Build → Activate → Compound</h2>
+        <p class="lede">
+          Same cadence every engagement. We start where hours burn, ship a system that fits how you operate, put it in production, then tighten until it compounds.
+        </p>
+      </header>
+      <div class="method-grid" data-reveal-stagger>
+        {methodSteps.map((step) => (
+          <article class="process-step" data-reveal>
+            <div class="process-step__index">{step.index}</div>
+            <h3 class="process-step__title">{step.title}</h3>
+            <p class="process-step__body">{step.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="studio-heading">
+    <div class="wrap">
+      <header class="section-header" data-reveal>
+        <p class="eyebrow">Studio</p>
+        <h2 id="studio-heading">Where we work.</h2>
+      </header>
+      <div class="who-rows">
+        <div class="who-row">
+          <strong>Pakistan</strong>
+          <span>Haripur / Mang — primary studio and engineering home.</span>
+        </div>
+        <div class="who-row">
+          <strong>United States</strong>
+          <span>Austin TX — US reach for operators and partners on that clock.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTABand headline="Want to work with a small team that ships?" />
+  <SiteFooter slot="footer" />
+</BaseLayout>

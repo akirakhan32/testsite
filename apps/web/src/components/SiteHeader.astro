@@ -1,0 +1,60 @@
+---
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const links = [
+  { href: "/services", label: "Services" },
+  { href: "/about", label: "About" },
+];
+---
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="logo" href="/" aria-label="CodifyPros home">CodifyPros</a>
+    <nav class="nav-desktop" aria-label="Primary">
+      {links.map((l) => (
+        <a href={l.href} aria-current={path === l.href ? "page" : undefined}>{l.label}</a>
+      ))}
+      <a class="btn btn-primary" href="/contact">Talk to us</a>
+    </nav>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-nav-open>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-nav" id="mobile-nav" hidden>
+  <div class="mobile-nav__top">
+    <a class="logo" href="/">CodifyPros</a>
+    <button class="nav-toggle" type="button" aria-label="Close menu" data-nav-close>
+      <span></span>
+    </button>
+  </div>
+  <nav class="mobile-nav__links" aria-label="Mobile">
+    {links.map((l) => (
+      <a href={l.href}>{l.label}</a>
+    ))}
+  </nav>
+  <a class="btn btn-primary" href="/contact">Talk to us</a>
+</div>
+
+<script>
+  const drawer = document.getElementById("mobile-nav");
+  const openBtn = document.querySelector("[data-nav-open]");
+  const closeBtn = document.querySelector("[data-nav-close]");
+
+  function openNav() {
+    if (!drawer || !openBtn) return;
+    drawer.hidden = false;
+    drawer.classList.add("is-open");
+    openBtn.setAttribute("aria-expanded", "true");
+    document.body.style.overflow = "hidden";
+  }
+  function closeNav() {
+    if (!drawer || !openBtn) return;
+    drawer.classList.remove("is-open");
+    drawer.hidden = true;
+    openBtn.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = "";
+  }
+  openBtn?.addEventListener("click", openNav);
+  closeBtn?.addEventListener("click", closeNav);
+  drawer?.querySelectorAll("a").forEach((a) => a.addEventListener("click", closeNav));
+</script>

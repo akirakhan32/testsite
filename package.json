@@ -1,0 +1,19 @@
+{
+  "name": "codifypros",
+  "private": true,
+  "version": "1.0.0",
+  "description": "CodifyPros marketing site — Astro web + Hono API monorepo",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=@codifypros/web & npm run dev --workspace=@codifypros/api",
+    "dev:web": "npm run dev --workspace=@codifypros/web",
+    "dev:api": "npm run dev --workspace=@codifypros/api",
+    "build": "npm run build --workspace=@codifypros/web && npm run build --workspace=@codifypros/api",
+    "start:api": "npm run start --workspace=@codifypros/api"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

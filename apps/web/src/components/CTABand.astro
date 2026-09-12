@@ -1,0 +1,20 @@
+---
+interface Props {
+  headline?: string;
+  label?: string;
+  href?: string;
+}
+const {
+  headline = "Tell us what’s eating the hours.",
+  label = "Talk to us",
+  href = "/contact",
+} = Astro.props;
+---
+<section class="cta-band" data-reveal aria-labelledby="cta-heading">
+  <div class="wrap">
+    <div class="cta-band__inner">
+      <h2 id="cta-heading" class="h2">{headline}</h2>
+      <a class="btn btn-primary" href={href}>{label}</a>
+    </div>
+  </div>
+</section>
