@@ -525,6 +525,11 @@ h3,
 .hero__frame-inner .cu {
   color: var(--copper);
 }
+.hero__frame-muted {
+  margin-top: 1.5em;
+  opacity: 0.55;
+}
+
 .craft-mark {
   position: absolute;
   top: 0;
@@ -1082,18 +1087,15 @@ textarea::placeholder {
   background: var(--ink-2);
   border-top: 1px solid var(--line);
   opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 400ms var(--ease-out), transform 400ms var(--ease-out);
+  transition: opacity 400ms var(--ease-out);
   pointer-events: none;
 }
 .sticky-cta.is-on {
   opacity: 1;
-  transform: none;
   pointer-events: auto;
 }
 @media (prefers-reduced-motion: reduce) {
   .sticky-cta {
-    transform: none;
     transition: opacity 200ms linear;
   }
 }
