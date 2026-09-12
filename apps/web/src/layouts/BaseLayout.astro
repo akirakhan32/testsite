@@ -71,6 +71,7 @@ const pageTitle = title.includes("CodifyPros") ? title : `${title} · CodifyPros
               const show = !e.isIntersecting;
               bar.hidden = !show;
               bar.classList.toggle("is-on", show);
+            document.documentElement.classList.toggle("has-sticky-cta", show);
             },
             { threshold: 0.05 }
           );

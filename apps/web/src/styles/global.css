@@ -1155,3 +1155,8 @@ textarea::placeholder {
 [data-reveal] {
   transition-duration: 450ms;
 }
+
+/* Reserve space so sticky CTA does not cover page content */
+html.has-sticky-cta .page-shell {
+  padding-bottom: 88px;
+}
