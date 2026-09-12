@@ -524,7 +524,7 @@ h3,
 }
 @media (min-width: 768px) {
   .service-row {
-    grid-template-columns: 200px 1fr auto;
+    grid-template-columns: 1fr auto auto;
     align-items: baseline;
     gap: 24px;
     padding: 32px 16px;

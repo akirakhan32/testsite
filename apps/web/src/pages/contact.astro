@@ -87,7 +87,6 @@ const serviceParam = Astro.url.searchParams.get("service") ?? "";
     const payload = {
       name: String(fd.get("name") || "").trim(),
       email: String(fd.get("email") || "").trim(),
-      company: String(fd.get("company") || "").trim() || undefined,
       message: String(fd.get("message") || "").trim(),
       budget: String(fd.get("budget") || "") || undefined,
       website: String(fd.get("website") || ""),
