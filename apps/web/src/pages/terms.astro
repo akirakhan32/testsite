@@ -1,0 +1,16 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+---
+<BaseLayout title="Terms" description="Terms for using the CodifyPros website.">
+  <SiteHeader slot="header" />
+  <article class="wrap section legal">
+    <p class="eyebrow">Legal</p>
+    <h1>Terms</h1>
+    <p class="lede">This site is provided for information about CodifyPros services. Project work is governed by a separate agreement. Do not rely on website copy as a contract.</p>
+    <p class="muted">Questions: <a class="text-link" href="mailto:contact@codifypros.io">contact@codifypros.io</a>.</p>
+    <p class="muted">Last updated: September 2026.</p>
+  </article>
+  <SiteFooter slot="footer" />
+</BaseLayout>

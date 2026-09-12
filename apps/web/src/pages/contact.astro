@@ -118,10 +118,15 @@ const serviceParam = Astro.url.searchParams.get("service") ?? "";
         form.reset();
       }
     } catch {
+      const subject = encodeURIComponent("CodifyPros brief");
+      const body = encodeURIComponent(
+        `Name: ${payload.name}\nEmail: ${payload.email}\nBudget: ${payload.budget || "n/a"}\n\n${payload.message}`
+      );
       showStatus(
         false,
-        "Could not reach the API. Email contact@codifypros.io instead."
+        "Could not reach the API. Opening email instead…"
       );
+      window.location.href = `mailto:contact@codifypros.io?subject=${subject}&body=${body}`;
     } finally {
       submitBtn.disabled = false;
     }

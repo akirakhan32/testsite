@@ -44,8 +44,25 @@ Ink `#0E1014` · paper `#F4F1EA` · copper `#C96A3D` · fonts: Instrument Serif,
 
 ## API
 
-- `GET /api/health` → `{ ok: true, status: "healthy" }`
-- `POST /api/contact` → Zod-validated `{ name, email, message, budget? }` · in-memory rate limit · CORS · console email stub
+- `GET /api/health` → liveness `{ ok: true, status: "healthy" }`
+- `GET /api/ready` → readiness (checks CORS + email provider config; `503` if not ready)
+- `POST /api/contact` → `{ name, email, message, budget? }` · Zod · IP rate limit · honeypot · CORS
+
+### Contact email
+
+Default `EMAIL_PROVIDER=stub` logs the full brief to the API console.
+
+For production mail via Resend:
+
+```bash
+EMAIL_PROVIDER=resend
+RESEND_API_KEY=re_...
+CONTACT_TO_EMAIL=contact@codifypros.io
+CONTACT_FROM_EMAIL=CodifyPros <noreply@your-verified-domain>
+CORS_ORIGIN=https://www.codifypros.com,https://codifypros.com
+```
+
+See `.env.example` and `apps/api/HARDEN.md`.
 
 ## License
 

@@ -1,0 +1,16 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+---
+<BaseLayout title="Privacy" description="How CodifyPros handles information you share with us.">
+  <SiteHeader slot="header" />
+  <article class="wrap section legal">
+    <p class="eyebrow">Legal</p>
+    <h1>Privacy</h1>
+    <p class="lede">We collect only what you send us — typically name, work email, and project details through the contact form or email. We use that to respond and deliver work. We do not sell personal data.</p>
+    <p class="muted">Contact form submissions may be processed by our email provider. For questions: <a class="text-link" href="mailto:contact@codifypros.io">contact@codifypros.io</a>.</p>
+    <p class="muted">Last updated: September 2026.</p>
+  </article>
+  <SiteFooter slot="footer" />
+</BaseLayout>
