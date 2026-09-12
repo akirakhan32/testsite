@@ -1,0 +1,6 @@
+{
+  "buildCommand": "npm run build --workspace=@codifypros/web",
+  "outputDirectory": "apps/web/dist",
+  "framework": null,
+  "rewrites": [{ "source": "/(.*)", "destination": "/$1" }]
+}
