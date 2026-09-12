@@ -55,21 +55,34 @@ const pageTitle = title.includes("CodifyPros") ? title : `${title} · CodifyPros
       <div class="wrap sticky-cta__inner">
         <span class="sticky-cta__copy">Stuck in manual ops?</span>
         <a class="btn btn-primary" href="/contact">Talk to us</a>
+        <button class="sticky-cta__dismiss" type="button" data-sticky-dismiss aria-label="Dismiss">×</button>
       </div>
     </div>
     <script>
       const bar = document.querySelector("[data-sticky-cta]");
-      const hero = document.querySelector(".hero, .page-hero, h1");
-      if (bar && hero) {
-        const io = new IntersectionObserver(
-          ([e]) => {
-            const show = !e.isIntersecting;
-            bar.hidden = !show;
-            bar.classList.toggle("is-on", show);
-          },
-          { threshold: 0.02 }
-        );
-        io.observe(hero);
+      const path = location.pathname.replace(/\/$/, "") || "/";
+      const dismissed = sessionStorage.getItem("cp-sticky-dismiss") === "1";
+      const onContact = path === "/contact";
+      if (bar && !onContact && !dismissed) {
+        const hero = document.querySelector(".hero");
+        if (hero) {
+          const io = new IntersectionObserver(
+            ([e]) => {
+              const show = !e.isIntersecting;
+              bar.hidden = !show;
+              bar.classList.toggle("is-on", show);
+            },
+            { threshold: 0.05 }
+          );
+          io.observe(hero);
+        }
+        bar.querySelector("[data-sticky-dismiss]")?.addEventListener("click", () => {
+          sessionStorage.setItem("cp-sticky-dismiss", "1");
+          bar.hidden = true;
+          bar.classList.remove("is-on");
+        });
+      } else if (bar) {
+        bar.remove();
       }
     </script>
     <script>
