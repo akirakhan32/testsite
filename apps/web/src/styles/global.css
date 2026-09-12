@@ -1079,26 +1079,50 @@ textarea::placeholder {
   bottom: 0;
   z-index: 40;
   padding: 12px 0 calc(12px + env(safe-area-inset-bottom));
-  background: rgba(14, 16, 20, 0.92);
+  background: var(--ink-2);
   border-top: 1px solid var(--line);
-  transform: translateY(110%);
-  transition: transform 400ms var(--ease-out);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 400ms var(--ease-out), transform 400ms var(--ease-out);
+  pointer-events: none;
 }
-.sticky-cta.is-on { transform: translateY(0); }
+.sticky-cta.is-on {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sticky-cta {
+    transform: none;
+    transition: opacity 200ms linear;
+  }
+}
 .sticky-cta__inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 12px;
 }
 .sticky-cta__copy {
   font-family: var(--font-mono);
   font-size: 12px;
   letter-spacing: 0.04em;
   color: var(--muted);
+  flex: 1;
 }
-@media (max-width: 640px) {
-  .sticky-cta__copy { display: none; }
+.sticky-cta__dismiss {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 22px;
+  cursor: pointer;
+}
+@media (min-width: 768px) {
+  .sticky-cta {
+    display: none;
+  }
 }
 .mech-grid {
   display: grid;
@@ -1108,6 +1132,7 @@ textarea::placeholder {
   .mech-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; }
 }
 .mech-card {
+  position: relative;
   border: 1px solid var(--line);
   border-radius: var(--radius-card);
   padding: 24px;
