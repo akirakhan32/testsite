@@ -3,12 +3,16 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import CTABand from "../components/CTABand.astro";
+import HeroPipeline3D from "../components/HeroPipeline3D.astro";
+import MechCardDiagram from "../components/MechCardDiagram.astro";
+import ScrollProgress from "../components/ScrollProgress.astro";
 import { services, methodSteps, fitIf, notFitIf } from "../data/services";
 
 const homeServices = services.filter((s) => s.home);
 const base = import.meta.env.BASE_URL.replace(/\/?$/, "/"); // always ends with /
 ---
 <BaseLayout title="CodifyPros — Replace the manual work. Keep the judgment.">
+  <ScrollProgress />
   <SiteHeader slot="header" />
 
   <section class="hero">
@@ -28,17 +32,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/"); // always ends with 
           <span>US reach</span>
         </div>
       </div>
-      <div class="hero__frame" aria-hidden="true">
-        <span class="craft-mark"></span>
-        <div class="hero__frame-inner">
-          <div class="cu">// ops.pipeline</div>
-          <div>ingest → classify → route</div>
-          <div class="ok">✓ lead scored · owner assigned</div>
-          <div>sheet sync · crm writeback</div>
-          <div class="ok">✓ exception queue cleared</div>
-          <div class="hero__frame-muted">awaiting operator review…</div>
-        </div>
-      </div>
+      <HeroPipeline3D />
     </div>
   </section>
 
@@ -120,16 +114,19 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/"); // always ends with 
       <div class="mech-grid" data-reveal-stagger>
         <article class="mech-card" data-reveal>
           <span class="craft-mark" aria-hidden="true"></span>
+          <MechCardDiagram variant="intake" />
           <p class="eyebrow">Intake → route</p>
           <h3>Work arrives once and finds an owner.</h3>
           <p>Inbox, form, or CRM event lands in the right queue — no hunting, no “who has this?”</p>
         </article>
         <article class="mech-card" data-reveal>
+          <MechCardDiagram variant="loop" />
           <p class="eyebrow">Human-in-the-loop</p>
           <h3>Judgment stays with people.</h3>
           <p>Bots handle the repeatable steps. Exceptions pause for a human, then the system continues.</p>
         </article>
         <article class="mech-card" data-reveal>
+          <MechCardDiagram variant="exception" />
           <p class="eyebrow">Exception queue</p>
           <h3>Failures surface. They don’t hide in chat.</h3>
           <p>Broken steps, missing data, and stalled jobs show up as work to clear — not silent drift.</p>

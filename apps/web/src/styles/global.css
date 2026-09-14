@@ -216,6 +216,9 @@ h3,
 .btn-primary:hover:not(:disabled) {
   background: var(--copper-hover);
 }
+.btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
 
 .btn-secondary {
   background: transparent;
@@ -237,13 +240,28 @@ h3,
 }
 
 .text-link {
+  position: relative;
   color: var(--paper);
   border-bottom: 1px solid transparent;
-  transition: color 160ms var(--ease-out), border-color 160ms var(--ease-out);
+  transition: color 160ms var(--ease-out);
+}
+.text-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 1px;
+  background: var(--copper);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 280ms var(--ease-out);
 }
 .text-link:hover {
   color: var(--copper-hover);
-  border-bottom-color: var(--copper);
+}
+.text-link:hover::after {
+  transform: scaleX(1);
 }
 
 .chip {
@@ -563,11 +581,31 @@ h3,
   border-top: 1px solid var(--line);
 }
 .service-row {
+  position: relative;
   display: grid;
   gap: 8px;
   padding: 28px 0;
   border-bottom: 1px solid var(--line);
-  transition: background 180ms var(--ease-out), padding 180ms var(--ease-out);
+  overflow: hidden;
+  transition: background 180ms var(--ease-out);
+}
+.service-row::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  background: var(--ink-2);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 320ms var(--ease-out);
+  z-index: 0;
+  pointer-events: none;
+}
+.service-row > * {
+  position: relative;
+  z-index: 1;
 }
 @media (min-width: 768px) {
   .service-row {
@@ -576,8 +614,8 @@ h3,
     gap: 24px;
     padding: 32px 16px;
   }
-  .service-row:hover {
-    background: var(--ink-2);
+  .service-row:hover::before {
+    transform: scaleX(1);
   }
 }
 .service-row__tag {
@@ -1139,6 +1177,16 @@ textarea::placeholder {
   border-radius: var(--radius-card);
   padding: 24px;
   background: var(--ink-2);
+  transition: transform 280ms var(--ease-out), border-color 280ms var(--ease-out);
+}
+.mech-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(244, 241, 234, 0.2);
+}
+@media (prefers-reduced-motion: reduce) {
+  .mech-card:hover {
+    transform: none;
+  }
 }
 .mech-card h3 {
   font-family: var(--font-display);
@@ -1159,4 +1207,38 @@ textarea::placeholder {
 /* Reserve space so sticky CTA does not cover page content */
 html.has-sticky-cta .page-shell {
   padding-bottom: 88px;
+}
+
+
+/* Services layout with spy rail */
+.services-layout {
+  display: block;
+  padding-bottom: 48px;
+}
+@media (min-width: 1100px) {
+  .services-layout {
+    display: flex;
+    gap: 48px;
+    align-items: flex-start;
+  }
+  .services-layout__main {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+/* CTA band — copper edge already present; subtle press on CTA */
+.cta-band .btn-primary {
+  transition: background 160ms var(--ease-out), transform 120ms var(--ease-out);
+}
+
+/* Hero frame legacy — unused when HeroPipeline3D mounts; keep for safety */
+.hero__frame {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--ink-2);
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  min-height: 280px;
 }

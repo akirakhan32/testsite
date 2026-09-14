@@ -1,0 +1,66 @@
+---
+interface Props {
+  variant: "intake" | "loop" | "exception";
+}
+const { variant } = Astro.props;
+---
+<svg
+  class="mech-diagram"
+  viewBox="0 0 200 72"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+>
+  {variant === "intake" && (
+    <>
+      <rect x="8" y="24" width="36" height="24" rx="2" stroke="currentColor" stroke-width="1.25" />
+      <line x1="44" y1="36" x2="88" y2="36" stroke="currentColor" stroke-width="1.25" />
+      <rect x="88" y="20" width="40" height="32" rx="2" stroke="var(--copper)" stroke-width="1.5" />
+      <line x1="128" y1="36" x2="168" y2="36" stroke="currentColor" stroke-width="1.25" />
+      <rect x="168" y="26" width="24" height="20" rx="2" stroke="currentColor" stroke-width="1.25" />
+      <circle cx="108" cy="36" r="2.5" fill="var(--copper)" />
+    </>
+  )}
+  {variant === "loop" && (
+    <>
+      <rect x="72" y="12" width="56" height="48" rx="2" stroke="currentColor" stroke-width="1.25" />
+      <path
+        d="M48 36 H72 M128 36 H152"
+        stroke="currentColor"
+        stroke-width="1.25"
+      />
+      <rect x="20" y="26" width="28" height="20" rx="2" stroke="currentColor" stroke-width="1.25" />
+      <rect x="152" y="26" width="28" height="20" rx="2" stroke="currentColor" stroke-width="1.25" />
+      <path
+        d="M100 12 V6 H140 V36"
+        stroke="var(--copper)"
+        stroke-width="1.5"
+        fill="none"
+      />
+      <circle cx="140" cy="36" r="3" fill="var(--copper)" />
+      <text x="86" y="42" fill="currentColor" font-size="8" font-family="ui-monospace,monospace" opacity="0.7">HITL</text>
+    </>
+  )}
+  {variant === "exception" && (
+    <>
+      <line x1="16" y1="36" x2="70" y2="36" stroke="currentColor" stroke-width="1.25" />
+      <rect x="70" y="22" width="48" height="28" rx="2" stroke="currentColor" stroke-width="1.25" />
+      <path d="M118 36 L148 18" stroke="currentColor" stroke-width="1.25" />
+      <path d="M118 36 L148 54" stroke="var(--copper)" stroke-width="1.5" />
+      <rect x="148" y="8" width="36" height="20" rx="2" stroke="currentColor" stroke-width="1.25" opacity="0.55" />
+      <rect x="148" y="44" width="36" height="20" rx="2" stroke="var(--copper)" stroke-width="1.5" />
+      <circle cx="166" cy="54" r="2.5" fill="var(--copper)" />
+    </>
+  )}
+</svg>
+
+<style>
+  .mech-diagram {
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    margin-bottom: 16px;
+    color: var(--muted);
+  }
+</style>

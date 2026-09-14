@@ -1,0 +1,48 @@
+---
+/** Copper scroll-progress rule — one only (CTA band left edge). */
+---
+<div class="scroll-progress" data-scroll-progress aria-hidden="true">
+  <span class="scroll-progress__bar" data-scroll-progress-bar></span>
+</div>
+
+<style>
+  .scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    z-index: 80;
+    pointer-events: none;
+    background: transparent;
+  }
+  .scroll-progress__bar {
+    display: block;
+    height: 100%;
+    width: 0%;
+    background: var(--copper);
+    transform-origin: left center;
+    will-change: width;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-progress {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const bar = document.querySelector("[data-scroll-progress-bar]");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (bar && !reduce) {
+    const update = () => {
+      const el = document.documentElement;
+      const max = el.scrollHeight - el.clientHeight;
+      const p = max > 0 ? (el.scrollTop / max) * 100 : 0;
+      bar.style.width = `${Math.min(100, Math.max(0, p))}%`;
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update, { passive: true });
+  }
+</script>

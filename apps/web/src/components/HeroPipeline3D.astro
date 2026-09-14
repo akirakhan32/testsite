@@ -1,0 +1,131 @@
+---
+/**
+ * Ops pipeline sculpture — lazy Three.js island + static poster fallback.
+ * One WebGL scene sitewide (home hero only).
+ */
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+---
+<div class="hero-pipeline" data-hero-pipeline>
+  <span class="craft-mark" aria-hidden="true"></span>
+  <img
+    class="hero-pipeline__poster"
+    data-hero-poster
+    src={`${base}poster-hero-pipeline.svg`}
+    alt=""
+    width="720"
+    height="900"
+    decoding="async"
+  />
+  <canvas class="hero-pipeline__canvas" data-hero-canvas hidden aria-hidden="true"></canvas>
+  <div class="hero-pipeline__labels" aria-hidden="true">
+    <span class="hero-pipeline__label hero-pipeline__label--intake">intake</span>
+    <span class="hero-pipeline__label hero-pipeline__label--route">route</span>
+    <span class="hero-pipeline__label hero-pipeline__label--exc">exception</span>
+  </div>
+</div>
+
+<style>
+  .hero-pipeline {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    background: var(--ink);
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    min-height: 280px;
+  }
+  .hero-pipeline__poster,
+  .hero-pipeline__canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+  .hero-pipeline__canvas {
+    z-index: 1;
+  }
+  .hero-pipeline.is-live .hero-pipeline__poster {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 400ms var(--ease-out);
+  }
+  .hero-pipeline__labels {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .hero-pipeline__label {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--paper);
+    opacity: 0.72;
+  }
+  .hero-pipeline__label--intake {
+    left: 10%;
+    bottom: 28%;
+  }
+  .hero-pipeline__label--route {
+    left: 42%;
+    top: 22%;
+    color: var(--copper);
+    opacity: 0.95;
+  }
+  .hero-pipeline__label--exc {
+    right: 10%;
+    bottom: 24%;
+  }
+  @media (max-width: 899px) {
+    .hero-pipeline__canvas {
+      display: none !important;
+    }
+    .hero-pipeline.is-live .hero-pipeline__poster {
+      opacity: 1;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-pipeline__canvas {
+      display: none !important;
+    }
+    .hero-pipeline.is-live .hero-pipeline__poster {
+      opacity: 1;
+    }
+  }
+</style>
+
+<script>
+  const root = document.querySelector("[data-hero-pipeline]");
+  if (root) {
+    const canvas = root.querySelector("[data-hero-canvas]");
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const mobile =
+      window.matchMedia("(max-width: 899px)").matches ||
+      window.matchMedia("(pointer: coarse)").matches;
+
+    if (reduce || mobile || !canvas) {
+      root.classList.add("is-poster");
+    } else {
+      const io = new IntersectionObserver(
+        async (entries) => {
+          if (!entries.some((e) => e.isIntersecting)) return;
+          io.disconnect();
+          try {
+            const { mountHeroPipeline } = await import("../scripts/hero-pipeline");
+            canvas.hidden = false;
+            mountHeroPipeline({ canvas, reduced: false, mobile: false });
+            root.classList.add("is-live");
+          } catch {
+            root.classList.add("is-poster");
+          }
+        },
+        { rootMargin: "80px", threshold: 0.08 }
+      );
+      io.observe(root);
+    }
+  }
+</script>

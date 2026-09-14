@@ -3,6 +3,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import CTABand from "../components/CTABand.astro";
+import PipelineMini from "../components/PipelineMini.astro";
+import ServiceDetailRail from "../components/ServiceDetailRail.astro";
 import { services, fitIf, notFitIf } from "../data/services";
 const base = import.meta.env.BASE_URL.replace(/\/?$/, "/"); // always ends with /
 ---
@@ -19,6 +21,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/"); // always ends with 
       <p class="lede">
         We replace manual operations with intelligent systems. Four core offers on every engagement path — plus Cloud & Run when you want us on the wheel after launch.
       </p>
+      <PipelineMini />
       <nav class="jump-links" aria-label="Jump to service">
         {services.map((s) => (
           <a class="chip" href={`#${s.slug}`}>{s.tag}</a>
@@ -27,35 +30,41 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/"); // always ends with 
     </div>
   </section>
 
-  <div class="wrap">
-    {services.map((s) => (
-      <article class="service-detail" id={s.slug} data-reveal>
-        <aside class="service-detail__aside">
-          <span class="chip">{s.tag}</span>
-        </aside>
-        <div>
-          <h2 class="h2 service-detail__title">{s.name}</h2>
-          <p class="lede service-detail__outcome">{s.outcome}</p>
-          <h4>Problem</h4>
-          <p class="muted">{s.problem}</p>
-          <h4>What we ship</h4>
-          <ul>
-            {s.ships.map((item) => (
-              <li>{item}</li>
-            ))}
-          </ul>
-          <h4>Stack signals</h4>
-          <div class="service-detail__stacks">
-            {s.stack.map((t) => (
-              <span class="chip">{t}</span>
-            ))}
+  <div class="wrap services-layout">
+    <ServiceDetailRail
+      slugs={services.map((s) => s.slug)}
+      labels={services.map((s) => s.tag)}
+    />
+    <div class="services-layout__main">
+      {services.map((s) => (
+        <article class="service-detail" id={s.slug} data-reveal>
+          <aside class="service-detail__aside">
+            <span class="chip">{s.tag}</span>
+          </aside>
+          <div>
+            <h2 class="h2 service-detail__title">{s.name}</h2>
+            <p class="lede service-detail__outcome">{s.outcome}</p>
+            <h4>Problem</h4>
+            <p class="muted">{s.problem}</p>
+            <h4>What we ship</h4>
+            <ul>
+              {s.ships.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+            <h4>Stack signals</h4>
+            <div class="service-detail__stacks">
+              {s.stack.map((t) => (
+                <span class="chip">{t}</span>
+              ))}
+            </div>
+            <p class="service-detail__cta">
+              <a class="text-link" href={`${base}contact?service=${s.slug}`}>Start a brief →</a>
+            </p>
           </div>
-          <p class="service-detail__cta">
-            <a class="text-link" href={`${base}contact?service=${s.slug}`}>Start a brief →</a>
-          </p>
-        </div>
-      </article>
-    ))}
+        </article>
+      ))}
+    </div>
   </div>
 
   <section class="section" aria-labelledby="fit-heading">
