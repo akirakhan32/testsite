@@ -4,10 +4,11 @@ interface Props {
   label?: string;
   href?: string;
 }
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/"); // always ends with /
 const {
   headline = "Tell us what’s eating the hours.",
   label = "Talk to us",
-  href = "/contact",
+  href = `${base}contact`,
 } = Astro.props;
 ---
 <section class="cta-band" data-reveal aria-labelledby="cta-heading">

@@ -16,6 +16,7 @@ const {
   description = "CodifyPros replaces manual operations with intelligent systems — software, agents, and workflows that run the work.",
 } = Astro.props;
 const pageTitle = title.includes("CodifyPros") ? title : `${title} · CodifyPros`;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/"); // always ends with /
 ---
 <!doctype html>
 <html lang="en">
@@ -42,7 +43,7 @@ const pageTitle = title.includes("CodifyPros") ? title : `${title} · CodifyPros
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
     <script is:inline>
       document.documentElement.classList.add("js");
     </script>
@@ -59,7 +60,7 @@ const pageTitle = title.includes("CodifyPros") ? title : `${title} · CodifyPros
     <div class="sticky-cta" data-sticky-cta hidden>
       <div class="wrap sticky-cta__inner">
         <span class="sticky-cta__copy">Stuck in manual ops?</span>
-        <a class="btn btn-primary" href="/contact">Talk to us</a>
+        <a class="btn btn-primary" href={`${base}contact`}>Talk to us</a>
         <button class="sticky-cta__dismiss" type="button" data-sticky-dismiss aria-label="Dismiss">×</button>
       </div>
     </div>
@@ -67,7 +68,7 @@ const pageTitle = title.includes("CodifyPros") ? title : `${title} · CodifyPros
       const bar = document.querySelector("[data-sticky-cta]");
       const path = location.pathname.replace(/\/$/, "") || "/";
       const dismissed = sessionStorage.getItem("cp-sticky-dismiss") === "1";
-      const onContact = path === "/contact";
+      const onContact = path.endsWith("/contact");
       if (bar && !onContact && !dismissed) {
         const hero = document.querySelector(".hero, .page-hero");
         if (hero) {
